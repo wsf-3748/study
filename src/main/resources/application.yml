@@ -1,0 +1,33 @@
+server:
+  #端口
+  port: 9080
+  #上下文
+  servlet:
+    context-path: /MybatisTest
+
+
+# 配置数据库
+spring:
+  application:
+    name: MybatisTest
+  resources:
+    static-locations: classpath:templates/
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+#    static-path-pattern: /templates/**
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/graduation_project?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+#    password: wsf123wsf
+    password: root
+    # 连接池配置
+    druid:
+      initial-size: 2
+      min-idle: 2
+      max-active: 10
+      filter:
+        config:
+          enabled: true

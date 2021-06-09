@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<h1>Welcome to myPage!</h1>
+<!--<form action="/login" method="post">
+    账户：<input type="text" name="username"  /> <br>
+    密码：<input type="password" name="password" /> <br>
+    验证：<input type="text" name="validateCode" /><img src="/createCode"><br>
+    <button type="submit">登陆</button>
+</form>-->
+<div class="field-wrap" data-field="mobile" style="position:relative;z-index:100;">
+    <label class="short">验证码：</label>
+    <span class="field">
+        <input class="ui-text short" id="imgcode" type="text" name="verify_code" maxlength="4" >
+        <span class="error" style="display: inline;"></span>
+    </span>
+    <span class="field vcode" data-type="vcode">
+        <img  width="120" id="verify_code_img" height="32" src="" onclick="javascript:changeImg()">
+        <a href="#" class="doc-color-link desc" onclick="javascript:changeImg()" >看不清，换一个？</a>
+    </span>
+    <button type="submit" onclick="javascript:checkImg()">校验</button>
+</div>
+<img src="1.png"/></body>
+</body>
+</html>
+<!-- 触发JS刷新  切换图片-->
+<script type="text/javascript">
+
+    window.onload = function(){
+　　  changeImg();  //待调用的函数
+    }
+    function changeImg(){
+        var img = document.getElementById("verify_code_img");
+        img.src = "/MybatisTest/getImg?date=" + new Date();
+        setTimeout(function (){
+            console.log(document.cookie);
+        }, 300);
+    }
+
+    function checkImg(){
+        let data = "imgcode="+document.getElementById("imgcode");
+        let url = "http://localhost:9080/MybatisTest/checkImg";
+        ajaxRequest(url, data, callBackFun);
+    }
+
+    function ajaxRequest(url, data, callBackFun){
+        var xmlhttp;
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        // 第二步：向服务器发送请求
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send(data)
+        // 第三步：获得来自服务器的响应
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                callBackFun(xmlhttp);
+            }
+        }
+    }
+    function callBackFun(xmlhttp){
+        console.log(xmlhttp);
+    }
+</script>
